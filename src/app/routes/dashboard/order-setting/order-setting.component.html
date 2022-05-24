@@ -11,6 +11,7 @@
             <th nzColumnKey="amount">Amount</th>
             <th nzColumnKey="interval">Interval</th>
             <th>Actions</th>
+            <th nzColumnKey="status">Status</th>
           </tr>
         </thead>
         <tbody>
@@ -23,6 +24,7 @@
               <td><ng-container *ngTemplateOutlet="amountTpl; context: { amount: data?.amount, id: data?.id }"></ng-container></td>
               <td><ng-container *ngTemplateOutlet="intervalTpl; context: { interval: data?.interval, id: data?.id }"></ng-container></td>
               <td><ng-container *ngTemplateOutlet="actionTpl; context: { id: data?.id }"></ng-container></td>
+              <td><ng-container *ngTemplateOutlet="statusTpl; context: { status: data?.status, id: data?.id }"></ng-container></td>
             </ng-container>
           </tr>
         </tbody>
@@ -103,5 +105,17 @@
     <a (click)="saveEdit(id)" class="save">Save</a>
     <nz-divider nzType="vertical"></nz-divider>
     <a nz-popconfirm nzPopconfirmTitle="Sure to cancel?" (nzOnConfirm)="cancelEdit(id)">Cancel</a>
+  </div>
+</ng-template>
+
+<ng-template #statusTpl let-item="status" let-id="id">
+  <div *ngIf="!editCache[id].edit || editCache[id].edit">
+    <p *ngIf="editCache[id].display.status === 'A'">{{ 'Active' }}</p>
+  </div>
+  <div *ngIf="!editCache[id].edit || editCache[id].edit">
+    <p *ngIf="editCache[id].display.status === 'I'">{{ 'Inactive' }}</p>
+  </div>
+  <div *ngIf="!editCache[id].edit || editCache[id].edit">
+    <p *ngIf="editCache[id].display.status === 'R'">{{ 'Suspended' }}</p>
   </div>
 </ng-template>
