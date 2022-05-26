@@ -255,10 +255,10 @@ export class OrderSettingComponent {
       const list = this.dropdownSetting[found.exchange.toLowerCase()];
       const setting = list.find((x: any) => x.symbol === this.editCache[id].initialSymbol);
       Object.assign(this.editCache[id], {
-        bidConfig: setting.bid,
-        askConfig: setting.ask,
-        amountConfig: setting.amount,
-        intervalConfig: setting.interval
+        bidConfig: setting.bid.sort((a: any, b: any) => (parseInt(a) > parseInt(b) ? 1 : -1)),
+        askConfig: setting.ask.sort((a: any, b: any) => (parseInt(a) > parseInt(b) ? 1 : -1)),
+        amountConfig: setting.amount.sort((a: any, b: any) => (parseInt(a) > parseInt(b) ? 1 : -1)),
+        intervalConfig: setting.interval.sort((a: any, b: any) => (parseInt(a) > parseInt(b) ? 1 : -1))
       });
     }
   }

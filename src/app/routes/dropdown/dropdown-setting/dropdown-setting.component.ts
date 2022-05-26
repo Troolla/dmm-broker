@@ -112,6 +112,7 @@ export class DropdownSettingComponent implements OnInit {
       value: item,
       label: item
     }));
+    this.optionsBid.sort((a, b) => (parseInt(a.value) > parseInt(b.value) ? 1 : -1));
     this.optionsBid.map(item => {
       this.selectedBids.push(item.value);
     });
@@ -119,6 +120,7 @@ export class DropdownSettingComponent implements OnInit {
       value: item,
       label: item
     }));
+    this.optionsAsk.sort((a, b) => (parseInt(a.value) > parseInt(b.value) ? 1 : -1));
     this.optionsAsk.map(item => {
       this.selectedAsks.push(item.value);
     });
@@ -126,6 +128,7 @@ export class DropdownSettingComponent implements OnInit {
       value: item,
       label: item
     }));
+    this.optionsAmount.sort((a, b) => (parseInt(a.value) > parseInt(b.value) ? 1 : -1));
     this.optionsAmount.map(item => {
       this.selectedAmounts.push(item.value);
     });
@@ -133,6 +136,7 @@ export class DropdownSettingComponent implements OnInit {
       value: item,
       label: item
     }));
+    this.optionsInterval.sort((a, b) => (parseInt(a.value) > parseInt(b.value) ? 1 : -1));
     this.optionsInterval.map(item => {
       this.selectedIntervals.push(item.value);
     });

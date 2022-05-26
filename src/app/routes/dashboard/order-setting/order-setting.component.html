@@ -40,7 +40,7 @@
   <nz-tag *ngIf="editCache[id].display.status === 'I'" nzColor="gray">
     <a (click)="updateStatus(id)">{{ item }}</a></nz-tag
   >
-  <nz-tag *ngIf="editCache[id].display.status === 'R'" nzColor="red">
+  <nz-tag *ngIf="editCache[id].display.status === 'S'" nzColor="#f50">
     <a (click)="updateStatus(id)">{{ item }}</a></nz-tag
   >
 </ng-template>
@@ -104,6 +104,6 @@
     <p *ngIf="editCache[id].display.status === 'I'">{{ 'Inactive' }}</p>
   </div>
   <div *ngIf="!editCache[id].edit || editCache[id].edit">
-    <p *ngIf="editCache[id].display.status === 'R'">{{ 'Suspended' }}</p>
+    <p *ngIf="editCache[id].display.status === 'S'">{{ 'Inactive' }}</p>
   </div>
 </ng-template>
