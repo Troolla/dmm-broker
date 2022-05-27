@@ -11,7 +11,7 @@
             <th nzColumnKey="amount">Amount</th>
             <th nzColumnKey="interval">Interval</th>
             <th>Actions</th>
-            <th nzColumnKey="status">Status</th>
+            <th nzColumnKey="status">Symbol Status</th>
           </tr>
         </thead>
         <tbody>
@@ -24,7 +24,7 @@
               <td><ng-container *ngTemplateOutlet="amountTpl; context: { amount: data?.amount, id: data?.id }"></ng-container></td>
               <td><ng-container *ngTemplateOutlet="intervalTpl; context: { interval: data?.interval, id: data?.id }"></ng-container></td>
               <td><ng-container *ngTemplateOutlet="actionTpl; context: { id: data?.id }"></ng-container></td>
-              <td><ng-container *ngTemplateOutlet="statusTpl; context: { status: data?.status, id: data?.id }"></ng-container></td>
+              <td><ng-container *ngTemplateOutlet="stateTpl; context: { state: data?.state, id: data?.id }"></ng-container></td>
             </ng-container>
           </tr>
         </tbody>
@@ -96,14 +96,11 @@
   </div>
 </ng-template>
 
-<ng-template #statusTpl let-item="status" let-id="id">
+<ng-template #stateTpl let-item="state" let-id="id">
   <div *ngIf="!editCache[id].edit || editCache[id].edit">
-    <p *ngIf="editCache[id].display.status === 'A'">{{ 'Active' }}</p>
+    <p *ngIf="editCache[id].display.state === ''">{{ 'Active' }}</p>
   </div>
   <div *ngIf="!editCache[id].edit || editCache[id].edit">
-    <p *ngIf="editCache[id].display.status === 'I'">{{ 'Inactive' }}</p>
-  </div>
-  <div *ngIf="!editCache[id].edit || editCache[id].edit">
-    <p *ngIf="editCache[id].display.status === 'S'">{{ 'Inactive' }}</p>
+    <p *ngIf="editCache[id].display.state === 'S'">{{ 'Inactive' }}</p>
   </div>
 </ng-template>

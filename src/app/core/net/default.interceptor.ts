@@ -96,7 +96,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     // 1、若请求为刷新Token请求，表示来自刷新Token可以直接跳转登录页
     if ([`v1/auth/refresh-token`].some(url => req.url.includes(url))) {
       this.toLogin();
-      return throwError(ev);
+      return throwError(() => ev);
     }
     // 2、如果 `refreshToking` 为 `true` 表示已经在请求刷新 Token 中，后续所有请求转入等待状态，直至结果返回后再重新发起请求
     if (this.refreshToking) {
@@ -123,7 +123,7 @@ export class DefaultInterceptor implements HttpInterceptor {
       catchError(err => {
         this.refreshToking = false;
         this.toLogin();
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -160,8 +160,8 @@ export class DefaultInterceptor implements HttpInterceptor {
           return this.refreshTokenRequest();
         })
       )
-      .subscribe(
-        res => {
+      .subscribe({
+        next: (res: any) => {
           this.refreshToking = false;
           this.tokenSrv.set({
             token: res.data.access_token,
@@ -169,8 +169,13 @@ export class DefaultInterceptor implements HttpInterceptor {
             ...res.data.user
           });
         },
-        () => this.toLogin()
-      );
+        error: (err: any) => {
+          console.log(err);
+        },
+        complete: () => {
+          this.toLogin();
+        }
+      });
   }
 
   // #endregion
@@ -235,7 +240,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         break;
     }
     if (ev instanceof HttpErrorResponse) {
-      return throwError(ev);
+      return throwError(() => ev);
     } else {
       return of(ev);
     }

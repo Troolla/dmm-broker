@@ -20,6 +20,7 @@ interface UpdatedData {
 }
 
 interface UpdatedValues {
+  state: string[];
   symbol: string[];
   bid: string[];
   ask: string[];
@@ -85,6 +86,7 @@ export class OrderSettingComponent {
           const value = JSON.parse(i.value);
           const data = {
             exchange: i.exchange,
+            state: value.map((x: any) => x.status),
             symbol: value.map((x: any) => x.symbol),
             bid: value.map((x: any) => x.bid),
             ask: value.map((x: any) => x.ask),
@@ -119,6 +121,7 @@ export class OrderSettingComponent {
       initialSymbol: this.editCache[id].initialSymbol,
       display: {
         status: this.listOfData[index].status,
+        state: this.listOfData[index].state[symbolIndex],
         bid: this.listOfData[index].bid[symbolIndex],
         ask: this.listOfData[index].ask[symbolIndex],
         amount: this.listOfData[index].amount[symbolIndex],
@@ -139,6 +142,7 @@ export class OrderSettingComponent {
           if (x.symbol === this.editCache[id].initialSymbol) {
             return {
               ...x,
+              status: '',
               bid: this.editCache[id].display.bid,
               ask: this.editCache[id].display.ask,
               amount: this.editCache[id].display.amount,
@@ -195,6 +199,7 @@ export class OrderSettingComponent {
           data: { ...item },
           display: {
             status: item.status,
+            state: item.state[index],
             bid: item.bid[index],
             ask: item.ask[index],
             amount: item.amount[index],
@@ -208,6 +213,7 @@ export class OrderSettingComponent {
           data: { ...item },
           display: {
             status: item.status,
+            state: item.state[0],
             bid: item.bid[0],
             ask: item.ask[0],
             amount: item.amount[0],
@@ -224,6 +230,7 @@ export class OrderSettingComponent {
       const index = item.symbol.findIndex(x => x === event);
       this.editCache[id].display = {
         status: item.status,
+        state: item.state[index],
         bid: item.bid[index],
         ask: item.ask[index],
         amount: item.amount[index],
