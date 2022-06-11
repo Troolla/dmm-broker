@@ -36,6 +36,8 @@ export class OrderHistoryComponent {
   getData($criteria?: any): void {
     this.criteriaStored = $criteria;
     this.loading = true;
+    const dateFrom = this.datePipe.transform(new Date(new Date().getTime() - 24 * 60 * 60 * 1000), DateConstant.BACKEND_INPUT_DATE_FORMAT);
+    const dateTo = this.datePipe.transform(new Date(), DateConstant.BACKEND_INPUT_DATE_FORMAT);
 
     this.$orders = this.feedRestService.getOrderHistory(this.criteria($criteria)).pipe(
       map(res => {
@@ -56,15 +58,45 @@ export class OrderHistoryComponent {
 
     this.feedRestService
       .getOrderHistory({
-        fromDate: this.datePipe.transform(new Date(new Date().getTime() - 24 * 60 * 60 * 1000), DateConstant.BACKEND_INPUT_DATE_FORMAT),
-        toDate: this.datePipe.transform(new Date(), DateConstant.BACKEND_INPUT_DATE_FORMAT),
+        fromDate: dateFrom,
+        toDate: dateTo,
         orderBy: 'createdDate',
         orderSequence: -1
       })
       .pipe(
-        map(res => {
+        map(async res => {
           if (res.data) {
             this.exportData = res.data;
+            let i = 2;
+
+            while (this.exportData.length !== res.total) {
+              const callback = async () =>
+                new Promise(resolve => {
+                  this.feedRestService
+                    .getOrderHistory({
+                      fromDate: dateFrom,
+                      toDate: dateTo,
+                      orderBy: 'createdDate',
+                      orderSequence: -1,
+                      page: i,
+                      limit: 100
+                    })
+                    .pipe(
+                      map(res => {
+                        if (res.data && res.data.length > 0) {
+                          this.exportData = this.exportData.concat(res.data);
+                        }
+                      }),
+                      finalize(() => {
+                        resolve(null);
+                      })
+                    )
+                    .subscribe();
+                });
+
+              await callback();
+              i++;
+            }
           }
         }),
         finalize(() => {
