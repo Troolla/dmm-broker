@@ -12,38 +12,38 @@ import { SettingRestService } from 'src/app/shared/services/rest/setting.rest.se
 })
 export class ExchangeSettingComponent implements OnInit {
   i: { ak?: string; sk?: string } = {};
-  additional_input: string = "";
+  additional_input: string = '';
   listOfData: any[] = [];
   exchangeOptions: any;
   selectExchange: any;
   initialData: {} = {};
   statusControl = false;
   loading = false;
-  exchange_name: any = "";
+  exchange_name: any = '';
 
   formJson: any[] = [
-    { label: "ACCESS KEY",  key: "access_key", value: null, isRequired: false, isVisible: true},
-    { label: "SECRET KEY", key: "secret_key", value: null, isRequired: false, isVisible: false},
-    { label: "PASSPHRASE", key: "passphrase", value: null, isRequired: false, isVisible: false}
-  ]
+    { label: 'ACCESS KEY', key: 'access_key', value: null, isRequired: false, isVisible: true },
+    { label: 'SECRET KEY', key: 'secret_key', value: null, isRequired: false, isVisible: false },
+    { label: 'PASSPHRASE', key: 'passphrase', value: null, isRequired: false, isVisible: false }
+  ];
 
   tempJsonBackup: any[] = [];
 
-  inputModel = this.formJson.map(x=>{
-    x.key
-  })
+  inputModel = this.formJson.map(x => {
+    x.key;
+  });
 
   constructor(
     public msg: NzMessageService,
     private settingRestService: SettingRestService,
     private cdr: ChangeDetectorRef,
     private notificationService: NzNotificationService
-    ) {
+  ) {
     this.tempJsonBackup = this.formJson;
   }
 
   ngOnInit(): void {
-    this.getData()
+    this.getData();
   }
 
   onSelectedExchange(value: number) {
@@ -54,17 +54,21 @@ export class ExchangeSettingComponent implements OnInit {
       this.selectExchange = '';
       // this.optionsSymbol = [{ value: '', label: '' }];
     } else {
-      this.exchange_name = this.listOfData[value-1];
+      this.exchange_name = this.listOfData[value - 1];
       this.selectExchange = value;
       let i = 0;
-      Object.keys(this.listOfData[value-1]).map((xs: any)=>{
-        this.statusControl = this.listOfData[value-1].status == 'A' ? false : true;
-        const set = this.formJson.find((x: any) => x.key === xs)
-        if(set?.key == 'access_key') {
-          if(this.listOfData[value-1].access_key.value !== '') {
-            this.formJson[i].value = this.listOfData[value-1].access_key.value;
-          } 
-          if(this.listOfData[value-1].access_key.isRequired == true) {
+      Object.keys(this.listOfData[value - 1]).map((xs: any) => {
+        this.statusControl = this.listOfData[value - 1].status == 'A' ? false : true;
+        const set = this.formJson.find((x: any) => x.key === xs);
+        if (set?.key == 'access_key') {
+          if (this.listOfData[value - 1].access_key.value !== '') {
+            this.formJson[i].value = this.listOfData[value - 1].access_key.value;
+
+            if (this.listOfData[value - 1].exchange === 'B2C2') {
+              this.formJson[i].label = 'ACCESS URL';
+            }
+          }
+          if (this.listOfData[value - 1].access_key.isRequired == true) {
             this.formJson[i].isRequired = true;
           } else {
             this.formJson[i].isRequired = false;
@@ -72,11 +76,11 @@ export class ExchangeSettingComponent implements OnInit {
           i++;
         }
 
-        if(set?.key == 'secret_key') {
-          if(this.listOfData[value-1].secret_key.value !== '') {
-            this.formJson[i].value = this.listOfData[value-1].secret_key.value;
-          } 
-          if(this.listOfData[value-1].secret_key.isRequired == true) {
+        if (set?.key == 'secret_key') {
+          if (this.listOfData[value - 1].secret_key.value !== '') {
+            this.formJson[i].value = this.listOfData[value - 1].secret_key.value;
+          }
+          if (this.listOfData[value - 1].secret_key.isRequired == true) {
             this.formJson[i].isRequired = true;
           } else {
             this.formJson[i].isRequired = false;
@@ -84,11 +88,11 @@ export class ExchangeSettingComponent implements OnInit {
           i++;
         }
 
-        if(set?.key == 'passphrase') {
-          if(this.listOfData[value-1].passphrase.value !== '') {
-            this.formJson[i].value = this.listOfData[value-1].passphrase.value;
+        if (set?.key == 'passphrase') {
+          if (this.listOfData[value - 1].passphrase.value !== '') {
+            this.formJson[i].value = this.listOfData[value - 1].passphrase.value;
           }
-          if(this.listOfData[value-1].passphrase.isRequired == true) {
+          if (this.listOfData[value - 1].passphrase.isRequired == true) {
             this.formJson[i].isRequired = true;
           } else {
             this.formJson[i].isRequired = false;
@@ -106,26 +110,26 @@ export class ExchangeSettingComponent implements OnInit {
       .geAllExchangeCredentials()
       .pipe(
         map(res => {
-          this.initialData = this.exchangeOptions;
+          console.log('res', res);
           let i = 1;
           this.exchangeOptions = res;
-          Object.keys(this.exchangeOptions).map((key) => {
+          Object.keys(this.exchangeOptions).map(key => {
             const data = {
               id: i,
               exchange: key,
               access_key: {
-                value: this.exchangeOptions[key].map((val: any) => val.KEY.value).toString(),
-                isRequired: JSON.parse(this.exchangeOptions[key].map((val: any) => val.KEY.isRequired).toString())
+                value: this.exchangeOptions[key].KEY.value.toString(),
+                isRequired: this.exchangeOptions[key].KEY.isRequired
               },
               secret_key: {
-                value: this.exchangeOptions[key].map((val: any) => val.SECRET.value).toString(),
-                isRequired: JSON.parse(this.exchangeOptions[key].map((val: any) => val.SECRET.isRequired).toString())
+                value: this.exchangeOptions[key].SECRET.value,
+                isRequired: this.exchangeOptions[key].SECRET.isRequired
               },
               passphrase: {
-                value: this.exchangeOptions[key].map((val: any) => val.PASSPHRASE.value).toString(),
-                isRequired: JSON.parse(this.exchangeOptions[key].map((val: any) => val.PASSPHRASE.isRequired).toString()),
+                value: this.exchangeOptions[key].PASSPHRASE.value,
+                isRequired: this.exchangeOptions[key].PASSPHRASE.isRequired
               },
-              status: this.exchangeOptions[key].map((val: any) => val.Status).toString(),
+              status: this.exchangeOptions[key].Status
             };
             i++;
             this.listOfData.push(data);
@@ -140,53 +144,56 @@ export class ExchangeSettingComponent implements OnInit {
   }
 
   reset() {
-    this.formJson = [    
-      { label: "ACCESS KEY",  key: "access_key", value: null, isRequired: false, isVisible: true},
-      { label: "SECRET KEY", key: "secret_key", value: null, isRequired: false, isVisible: false},
-      { label: "PASSPHRASE", key: "passphrase", value: null, isRequired: false, isVisible: false}
+    this.formJson = [
+      { label: 'ACCESS KEY', key: 'access_key', value: null, isRequired: false, isVisible: true },
+      { label: 'SECRET KEY', key: 'secret_key', value: null, isRequired: false, isVisible: false },
+      { label: 'PASSPHRASE', key: 'passphrase', value: null, isRequired: false, isVisible: false }
     ];
   }
 
   submit(index: any) {
     this.loading = true;
-    
-    this.formJson.forEach(x=>{
-      this.listOfData[index-1][x.key].value = x.value;
+
+    this.formJson.forEach(x => {
+      this.listOfData[index - 1][x.key].value = x.value;
     });
 
     let payload: any = {};
 
-    this.listOfData.forEach((x, i)=>{
+    this.listOfData.forEach((x, i) => {
       Object.assign(payload, {
-        [x.exchange]: [{
+        [x.exchange]: {
           KEY: x.access_key,
           SECRET: x.secret_key,
           PASSPHRASE: x.passphrase,
           Status: x.status
-        }]
-      })
-    })
-    
-    this.settingRestService.updateExchangeCredentials(payload, this.exchange_name.exchange).pipe(
-      map(res => {
-        if(res == HttpStatusCode.Ok) {
-          this.notificationService.success('Success', this.listOfData[index-1].exchange+' successfully updated!');
-        } else {
-          this.notificationService.error('Invalid', 'Entered Keys Incorrect.');
         }
-      }),
-      finalize(() => {
-        this.loading = false;
-        this.getData();
-      })
-    ).subscribe();
+      });
+    });
+
+    this.settingRestService
+      .updateExchangeCredentials(payload, this.exchange_name.exchange)
+      .pipe(
+        map(res => {
+          if (res == HttpStatusCode.Ok) {
+            this.notificationService.success('Success', `${this.listOfData[index - 1].exchange} successfully updated!`);
+          } else {
+            this.notificationService.error('Invalid', 'Entered Keys Incorrect.');
+          }
+        }),
+        finalize(() => {
+          this.loading = false;
+          this.getData();
+        })
+      )
+      .subscribe();
   }
 
   clearSelectedArray(): void {
-    this.formJson = [    
-      { label: "ACCESS KEY",  key: "access_key", value: null, isRequired: false, isVisible: true},
-      { label: "SECRET KEY", key: "secret_key", value: null, isRequired: false, isVisible: false},
-      { label: "PASSPHRASE", key: "passphrase", value: null, isRequired: false, isVisible: false}
+    this.formJson = [
+      { label: 'ACCESS KEY', key: 'access_key', value: null, isRequired: false, isVisible: true },
+      { label: 'SECRET KEY', key: 'secret_key', value: null, isRequired: false, isVisible: false },
+      { label: 'PASSPHRASE', key: 'passphrase', value: null, isRequired: false, isVisible: false }
     ];
   }
 }

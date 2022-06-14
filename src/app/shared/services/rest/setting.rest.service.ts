@@ -33,7 +33,7 @@ export class SettingRestService extends AbstractRestService {
 
   updateExchangeCredentials(payload: ExchangeSetting, selectedExchange: string) {
     // console.log(selectedExchange)
-    return this.post(`/update-exchange-credentials?exchange_name=`+selectedExchange, payload).pipe(responseHandler());
+    return this.post(`/update-exchange-credentials?exchange_name=${selectedExchange}`, payload).pipe(responseHandler());
   }
 }
 
