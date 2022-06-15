@@ -4,9 +4,10 @@
 <nz-card [nzBordered]="false">
   <form nz-form>
     <nz-form-item>
-      <nz-form-label [nzSm]="5" [nzXs]="20" nzRequired>Exchange Name</nz-form-label>
+      <nz-form-label [nzSm]="4" [nzXs]="20" nzRequired>Exchange Name</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+
       <nz-select
-        style="width: 57.4em"
         nzAllowClear
         nzShowSearch
         nzPlaceholder="Exchange"
@@ -16,14 +17,16 @@
       >
         <nz-option *ngFor="let e of listOfData" [nzValue]="e.id" [nzLabel]="e.exchange"></nz-option>
       </nz-select>
+    </nz-form-control>
       <span style="padding: 4px; margin-left: 5px; color: red" *ngIf="statusControl == true">
         Exchange is not available at the moment*
       </span>
     </nz-form-item>
 
     <nz-form-item *ngFor="let inputName of formJson; let i = index" [label]="inputName.label">
-      <nz-form-label [nzSm]="5" [nzXs]="20" nzRequired>{{ inputName.label }}</nz-form-label>
-      <nz-input-group style="width: 57.4em" [nzSuffix]="suffixTemplate">
+      <nz-form-label [nzSm]="4" [nzXs]="20" nzRequired>{{ inputName.label }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-input-group style="width: 100%" [nzSuffix]="suffixTemplate">
         <input
           [disabled]="statusControl || !inputName.isRequired"
           [type]="inputName.isVisible ? 'text' : 'password'"
@@ -33,6 +36,7 @@
           [name]="inputName.key"
         />
       </nz-input-group>
+    </nz-form-control>
       <span style="padding: 4px; margin-left: 5px; color: red" *ngIf="!inputName.value && inputName.isRequired">
         {{ inputName.label }} required
       </span>
