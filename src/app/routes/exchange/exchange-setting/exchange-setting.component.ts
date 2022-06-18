@@ -113,12 +113,13 @@ export class ExchangeSettingComponent implements OnInit {
           console.log('res', res);
           let i = 1;
           this.exchangeOptions = res;
+          
           Object.keys(this.exchangeOptions).map(key => {
             const data = {
               id: i,
               exchange: key,
               access_key: {
-                value: this.exchangeOptions[key].KEY.value.toString(),
+                value: this.exchangeOptions[key].KEY.value,
                 isRequired: this.exchangeOptions[key].KEY.isRequired
               },
               secret_key: {
