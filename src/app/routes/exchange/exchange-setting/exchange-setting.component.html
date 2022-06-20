@@ -47,6 +47,47 @@
           (click)="inputName.isVisible = !inputName.isVisible"
         ></i>
       </ng-template>
+      <nz-form-label [nzSm]="5" [nzXs]="20" nzRequired>Exchange Name</nz-form-label>
+      <nz-form-control>
+        <nz-select
+          nzAllowClear
+          nzShowSearch
+          nzPlaceholder="Exchange"
+          [(ngModel)]="selectExchange"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="onSelectedExchange($event)"
+        >
+          <nz-option *ngFor="let e of listOfData" [nzValue]="e.id" [nzLabel]="e.exchange"></nz-option>
+        </nz-select>
+        <p style="padding: 4px; margin-left: 5px; color: red" *ngIf="statusControl == true"> Exchange is not available at the moment* </p>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item *ngFor="let inputName of formJson; let i = index" [label]="inputName.label">
+      <nz-form-label [nzSm]="5" [nzXs]="20" nzRequired>{{ inputName.label }}</nz-form-label>
+      <nz-form-control>
+        <nz-input-group style="width: 100%" [nzSuffix]="suffixTemplate">
+          <input
+            [disabled]="statusControl || !inputName.isRequired"
+            [type]="inputName.isVisible ? 'text' : 'password'"
+            nz-input
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="inputName.value"
+            [name]="inputName.key"
+          />
+        </nz-input-group>
+        <p style="padding: 4px; margin-left: 5px; color: red" *ngIf="!inputName.value && inputName.isRequired">
+          {{ inputName.label }} required
+        </p>
+        <ng-template #suffixTemplate>
+          <i
+            style="cursor: pointer"
+            nz-icon
+            [nzType]="inputName.isVisible ? 'eye' : 'eye'"
+            (click)="inputName.isVisible = !inputName.isVisible"
+          ></i>
+        </ng-template>
+      </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
