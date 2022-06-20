@@ -110,7 +110,6 @@ export class ExchangeSettingComponent implements OnInit {
       .geAllExchangeCredentials()
       .pipe(
         map(res => {
-          console.log('res', res);
           let i = 1;
           this.exchangeOptions = res;
           

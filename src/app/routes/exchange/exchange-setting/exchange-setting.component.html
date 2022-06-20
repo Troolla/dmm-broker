@@ -4,9 +4,8 @@
 <nz-card [nzBordered]="false">
   <form nz-form>
     <nz-form-item>
-      <nz-form-label [nzSm]="4" [nzXs]="20" nzRequired>Exchange Name</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24">
-
+      <nz-form-label [nzSm]="5" nzRequired>Exchange Name</nz-form-label>
+      <nz-form-control [nzSpan]="14">
       <nz-select
         nzAllowClear
         nzShowSearch
@@ -17,15 +16,15 @@
       >
         <nz-option *ngFor="let e of listOfData" [nzValue]="e.id" [nzLabel]="e.exchange"></nz-option>
       </nz-select>
-    </nz-form-control>
-      <span style="padding: 4px; margin-left: 5px; color: red" *ngIf="statusControl == true">
+      </nz-form-control>
+      <span *ngIf="statusControl == true" style="padding: 4px; margin-left: 5px; color: red">
         Exchange is not available at the moment*
       </span>
     </nz-form-item>
 
     <nz-form-item *ngFor="let inputName of formJson; let i = index" [label]="inputName.label">
-      <nz-form-label [nzSm]="4" [nzXs]="20" nzRequired>{{ inputName.label }}</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-form-label [nzSm]="5" nzRequired>{{ inputName.label }}</nz-form-label>
+      <nz-form-control [nzSpan]="14">
       <nz-input-group style="width: 100%" [nzSuffix]="suffixTemplate">
         <input
           [disabled]="statusControl || !inputName.isRequired"
