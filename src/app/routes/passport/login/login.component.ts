@@ -82,6 +82,6 @@ export class UserLoginComponent implements OnInit {
   }
 
   signInWithGoogle(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).catch(err => console.log(err));
   }
 }
