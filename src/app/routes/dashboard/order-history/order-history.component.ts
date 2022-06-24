@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { STColumn } from '@delon/abc/st';
+import { Store } from '@ngxs/store';
 import { finalize, map, Observable } from 'rxjs';
+import { GlobalState } from 'src/app/core/store/global.state';
 import { DateConstant } from 'src/app/shared/constants/date.constant';
 import { DateFormatPipe } from 'src/app/shared/pipes/date-format.pipe';
 import { ExportService } from 'src/app/shared/services/export.service';
@@ -12,7 +14,7 @@ import commonUtil from 'src/app/shared/utils/common-util';
   templateUrl: './order-history.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OrderHistoryComponent {
+export class OrderHistoryComponent implements OnInit {
   $orders!: Observable<any>;
   loading = false;
 
@@ -25,13 +27,21 @@ export class OrderHistoryComponent {
   data = [];
 
   exportData = [];
+  user: any;
 
   constructor(
     private feedRestService: FeedRestService,
     private cdr: ChangeDetectorRef,
     private datePipe: DateFormatPipe,
-    private exportService: ExportService
+    private exportService: ExportService,
+    private store: Store
   ) {}
+
+  ngOnInit(): void {
+    this.store.select(GlobalState.getUser).subscribe(value => {
+      this.user = value;
+    });
+  }
 
   getData($criteria?: any): void {
     this.criteriaStored = $criteria;
@@ -69,7 +79,8 @@ export class OrderHistoryComponent {
             this.exportData = res.data;
             let i = 2;
 
-            while (this.exportData.length !== res.total) {
+            // Long queue, so logout should stop trigger API
+            while (this.exportData.length !== res.total && this.user) {
               const callback = async () =>
                 new Promise(resolve => {
                   this.feedRestService
@@ -79,7 +90,7 @@ export class OrderHistoryComponent {
                       orderBy: 'createdDate',
                       orderSequence: -1,
                       page: i,
-                      limit: 100
+                      limit: 1000
                     })
                     .pipe(
                       map(res => {
