@@ -12,6 +12,7 @@ import commonUtil from 'src/app/shared/utils/common-util';
 @Component({
   selector: 'app-order-history',
   templateUrl: './order-history.component.html',
+  styleUrls: ['./order-history.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OrderHistoryComponent implements OnInit {

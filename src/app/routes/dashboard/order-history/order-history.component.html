@@ -1,6 +1,13 @@
-<div class="mb-md st-width" nz-row nzJustify="end">
-  <button nz-col nz-button (click)="reset()">Update</button>
-  <button nz-col nz-button (click)="export()" [disabled]="exportData.length === 0">Current Date</button>
+<div class="mb-md st-width">
+  <div nz-row nzJustify="space-between">
+    <div nz-col>
+      <h3>Order History</h3>
+    </div>
+    <div nz-col>
+      <button nz-col nz-button nzType="primary" (click)="reset()">Update</button>
+      <button nz-col nz-button nzType="primary" (click)="export()" [disabled]="exportData.length === 0">Current Date</button>
+    </div>
+  </div>
 </div>
 <nz-card [nzBordered]="false">
   <nz-space nzSize="middle" class="width-100" nzDirection="vertical">

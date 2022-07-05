@@ -16,7 +16,7 @@
               <td>{{ data?.exchange }}</td>
               <td><ng-container *ngTemplateOutlet="symbolTpl; context: { symbol: data?.symbol, id: data?.exchange }"></ng-container></td>
               <td><ng-container *ngTemplateOutlet="amountTpl; context: { amount: data?.amount, id: data?.exchange }"></ng-container></td>
-              <td><a (click)="getData()">Update</a></td>
+              <td><button nz-button nzType="primary" (click)="getData()">Update</button></td>
             </ng-container>
           </tr>
         </tbody>
