@@ -95,7 +95,7 @@
 </ng-template>
 
 <ng-template #actionTpl let-id="id">
-  <button nz-button nzType="primary" *ngIf="!editCache[id].edit" (click)="startEdit(id)">Update</button>
+  <button nz-button nzType="primary" *ngIf="!editCache[id].edit" (click)="startEdit(id)">Edit</button>
   <div *ngIf="editCache[id].edit">
     <button nz-button nzType="primary" (click)="saveEdit(id)" class="save">Save</button>
     <nz-divider nzType="vertical"></nz-divider>
