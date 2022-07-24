@@ -125,16 +125,20 @@ export class OrderHistoryComponent implements OnInit {
   export(): void {
     const data: any[] = [];
     this.exportData.forEach((d: any) => {
-      // Remove unncessary things
-      delete d.updatedBy;
-      delete d.updatedDate;
-      delete d.createdBy;
-
       data.push({
-        ...d,
-        orderTime: this.datePipe.transform(d.orderTime, 'dd/MM/yyyy HH:mm:ss'),
-        createdDate: this.datePipe.transform(d.createdDate, this.DATE.CURRENT_DATE_TIME_FORMAT),
-        orderResult: d.orderResult === 'C' ? 'Matched' : d.orderResult === 'P' ? 'Pending for confirmation' : 'Not matched'
+        id: d.id,
+        exchange: d.exchange,
+        orderId: d.orderId,
+        orderTime: this.datePipe.transform(d.createdDate, 'yyyy/MM/dd HH:mm:ss'),
+        // createdDate: this.datePipe.transform(d.createdDate, this.DATE.CURRENT_DATE_TIME_FORMAT),
+        symbol: d.symbol,
+        side: d.side,
+        orderAmount: d.orderAmount,
+        orderPrice: d.orderPrice,
+        orderResult: d.orderResult === 'C' ? 'Matched' : d.orderResult === 'P' ? 'Pending for confirmation' : 'Not matched',
+        matchPrice: d.averagePrice,
+        failedReason: d.failedReason,
+        signalPrice: d.signalPrice
       });
     });
     this.exportService.exportToCsv(data, `order_history`);
