@@ -4,8 +4,8 @@
 <nz-card [nzBordered]="false">
   <form nz-form>
     <nz-form-item>
-      <nz-form-label [nzSm]="5" [nzXs]="20" nzRequired>Exchange Name</nz-form-label>
-      <nz-form-control>
+      <nz-form-label [nzSm]="5" nzRequired>Exchange Name</nz-form-label>
+      <nz-form-control [nzSpan]="14">
         <nz-select
           nzAllowClear
           nzShowSearch
@@ -16,7 +16,25 @@
         >
           <nz-option *ngFor="let e of listOfData" [nzValue]="e.id" [nzLabel]="e.exchange"></nz-option>
         </nz-select>
-        <p style="padding: 4px; margin-left: 5px; color: red" *ngIf="statusControl == true"> Exchange is not available at the moment* </p>
+      </nz-form-control>
+      <span *ngIf="statusControl == true" style="padding: 4px; margin-left: 5px; color: red">
+        Exchange is not available at the moment*
+      </span>
+    </nz-form-item>
+
+    <nz-form-item *ngIf="selectedExchange === 'Coincheck'">
+      <nz-form-label [nzSm]="5" nzRequired>Module</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <nz-select
+          nzAllowClear
+          nzShowSearch
+          nzPlaceholder="Module"
+          [(ngModel)]="selectModule"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="onSelectedModules($event)"
+        >
+          <nz-option *ngFor="let e of moduleList" [nzValue]="e" [nzLabel]="e"></nz-option>
+        </nz-select>
       </nz-form-control>
     </nz-form-item>
 
