@@ -22,7 +22,7 @@
       </span>
     </nz-form-item>
 
-    <nz-form-item *ngIf="selectedExchange === 'Coincheck'">
+    <nz-form-item *ngIf="multipleKeys.includes(selectedExchange)">
       <nz-form-label [nzSm]="5" nzRequired>Module</nz-form-label>
       <nz-form-control [nzSpan]="14">
         <nz-select

@@ -24,7 +24,7 @@ export class ExchangeSettingComponent implements OnInit {
   exchangeDetails: any = {};
   selectModule: any;
   selectedExchange: any;
-  multipleKeys = ['Coincheck'];
+  multipleKeys = ['Coincheck', 'Zaif'];
 
   formJson: any[] = [
     { label: 'ACCESS KEY', key: 'access_key', value: null, isRequired: false, isVisible: true },
