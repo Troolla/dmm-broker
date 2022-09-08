@@ -171,6 +171,7 @@ export class ExchangeSettingComponent implements OnInit {
               const list: any[] = [];
               const modules = this.exchangeOptions[key].map((x: any) => x.Modules);
               this.exchangeOptions[key].forEach((attr: any) => {
+                console.log(attr);
                 list.push({
                   exchange: key,
                   access_key: {
