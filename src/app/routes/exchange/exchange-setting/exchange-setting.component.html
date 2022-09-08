@@ -22,6 +22,22 @@
       </span>
     </nz-form-item>
 
+    <nz-form-item *ngIf="selectedExchange === 'Coincheck'">
+      <nz-form-label [nzSm]="5" nzRequired>Module</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <nz-select
+          nzAllowClear
+          nzShowSearch
+          nzPlaceholder="Module"
+          [(ngModel)]="selectModule"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="onSelectedModules($event)"
+        >
+          <nz-option *ngFor="let e of moduleList" [nzValue]="e" [nzLabel]="e"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
     <nz-form-item *ngFor="let inputName of formJson; let i = index" [label]="inputName.label">
       <nz-form-label [nzSm]="5" [nzXs]="20" nzRequired>{{ inputName.label }}</nz-form-label>
       <nz-form-control>
