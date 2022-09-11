@@ -25,6 +25,7 @@ interface UpdatedValues {
   ask: string[];
   amount: string[];
   interval: string[];
+  cancel_interval: string[];
   status: string;
   id: string;
   exchange: string;
@@ -92,6 +93,7 @@ export class OrderSettingComponent {
             ask: value.map((x: any) => x.ask),
             amount: value.map((x: any) => x.amount),
             interval: value.map((x: any) => x.interval),
+            cancel_interval: value.map((x: any) => x.cancel_interval),
             status: i.status,
             statusError: value.map((x: any) => x.status),
             errorCount: value.map((x: any) => x.errorCount),
@@ -127,6 +129,7 @@ export class OrderSettingComponent {
         ask: this.listOfData[index].ask[symbolIndex],
         amount: this.listOfData[index].amount[symbolIndex],
         interval: this.listOfData[index].interval[symbolIndex],
+        cancel_interval: this.listOfData[index].cancel_interval[symbolIndex],
         statusError: this.listOfData[index].statusError[symbolIndex],
         errorCount: this.listOfData[index].errorCount[symbolIndex]
       }
@@ -154,6 +157,7 @@ export class OrderSettingComponent {
               ask: this.editCache[id].display.ask,
               amount: this.editCache[id].display.amount,
               interval: this.editCache[id].display.interval,
+              cancel_interval: this.editCache[id].display.cancel_interval,
               status: this.editCache[id].display.statusError
             };
           } else {
@@ -212,6 +216,7 @@ export class OrderSettingComponent {
             ask: item.ask[index],
             amount: item.amount[index],
             interval: item.interval[index],
+            cancel_interval: item.cancel_interval[index],
             statusError: item.statusError[index],
             errorCount: item.errorCount[index]
           }
@@ -227,6 +232,7 @@ export class OrderSettingComponent {
             ask: item.ask[0],
             amount: item.amount[0],
             interval: item.interval[0],
+            cancel_interval: item.cancel_interval[0],
             statusError: item.statusError[0],
             errorCount: item.errorCount[0]
           }
@@ -245,6 +251,7 @@ export class OrderSettingComponent {
         ask: item.ask[index],
         amount: item.amount[index],
         interval: item.interval[index],
+        cancel_interval: item.cancel_interval[index],
         statusError: item.statusError[index],
         errorCount: item.errorCount[index]
       };
@@ -289,7 +296,8 @@ export class OrderSettingComponent {
         bidConfig: setting.bid,
         askConfig: setting.ask,
         amountConfig: setting.amount,
-        intervalConfig: setting.interval
+        intervalConfig: setting.interval,
+        cancelIntervalConfig: setting.cancel_interval
       });
     }
   }
