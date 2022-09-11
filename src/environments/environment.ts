@@ -14,10 +14,10 @@ export const environment = {
     baseUrl: './',
     refreshTokenEnabled: true,
     refreshTokenType: 'auth-refresh',
-    // serverUrl: 'https://beta2.orderbot.jp/',
-    // apiUrl: 'https://beta2.orderbot.jp/api/',
-    serverUrl: 'http://localhost:3000/',
-    apiUrl: 'http://localhost:3000/api/'
+    serverUrl: 'https://beta2.orderbot.jp/',
+    apiUrl: 'https://beta2.orderbot.jp/api/',
+    // serverUrl: 'http://localhost:3000/',
+    // apiUrl: 'http://localhost:3000/api/'
   },
   modules: [DelonMockModule.forRoot({ data: MOCKDATA })]
 } as Environment;
