@@ -11,5 +11,7 @@ export const environment = {
     apiUrl: 'https://beta2.orderbot.jp/api/'
     // serverUrl: 'http://localhost:3000/',
     // apiUrl: 'http://localhost:3000/api/'
+    serverUrl: 'https://beta1.orderbot.jp/',
+    apiUrl: 'https://beta1.orderbot.jp/api/'
   }
 } as Environment;
