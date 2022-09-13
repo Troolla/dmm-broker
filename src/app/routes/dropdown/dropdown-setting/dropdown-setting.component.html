@@ -96,6 +96,20 @@
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
+            <nz-form-label>Cancel Interval&nbsp;<span class="label">&nbsp;(Multiple inputs allowed)</span></nz-form-label>
+            <nz-form-control>
+              <nz-select
+                nzPlaceholder="Cancel Interval"
+                [(ngModel)]="selectedCancelIntervals"
+                [ngModelOptions]="{ standalone: true }"
+                [nzOptions]="optionsCancelInterval"
+                nzMode="tags"
+                [nzTokenSeparators]="[',']"
+              >
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
             <nz-form-control class="right">
               <button nz-button nzType="primary" (click)="updateDropdown()" [nzLoading]="loading">Save</button>
             </nz-form-control>
