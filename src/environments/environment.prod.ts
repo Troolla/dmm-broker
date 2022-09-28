@@ -7,7 +7,7 @@ export const environment = {
     baseUrl: './',
     refreshTokenEnabled: true,
     refreshTokenType: 'auth-refresh',
-    serverUrl: 'https://orderbot.jp/',
-    apiUrl: 'https://orderbot.jp/api/'
+    serverUrl: 'https://beta1.orderbot.jp/',
+    apiUrl: 'https://beta1.orderbot.jp/api/'
   }
 } as Environment;

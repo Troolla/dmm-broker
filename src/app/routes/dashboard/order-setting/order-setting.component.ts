@@ -233,7 +233,6 @@ export class OrderSettingComponent {
         };
       }
     });
-    console.log(this.editCache);
   }
 
   changeSymbol(event: any, id: string) {
