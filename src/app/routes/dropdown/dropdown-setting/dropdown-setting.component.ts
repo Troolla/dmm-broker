@@ -12,6 +12,7 @@ interface UpdatedValues {
   ask: any[];
   amount: any[];
   interval: any[];
+  cancel_interval: any[];
   id: string;
   exchange: string;
 }
@@ -33,6 +34,7 @@ export class DropdownSettingComponent implements OnInit {
   optionsAsk: Array<{ value: string; label: string }> = [];
   optionsAmount: Array<{ value: string; label: string }> = [];
   optionsInterval: Array<{ value: string; label: string }> = [];
+  optionsCancelInterval: Array<{ value: string; label: string }> = [];
 
   selectedCP: any;
   selectedSymbol: any;
@@ -40,6 +42,7 @@ export class DropdownSettingComponent implements OnInit {
   selectedAsks: any[] = [];
   selectedAmounts: any[] = [];
   selectedIntervals: any[] = [];
+  selectedCancelIntervals: any[] = [];
 
   constructor(
     public _router: Router,
@@ -71,7 +74,8 @@ export class DropdownSettingComponent implements OnInit {
                 bid: this.dropdownSetting[key].map((x: any) => x.bid),
                 ask: this.dropdownSetting[key].map((x: any) => x.ask),
                 amount: this.dropdownSetting[key].map((x: any) => x.amount),
-                interval: this.dropdownSetting[key].map((x: any) => x.interval)
+                interval: this.dropdownSetting[key].map((x: any) => x.interval),
+                cancel_interval: this.dropdownSetting[key].map((x: any) => x.cancel_interval)
               };
               i++;
               this.listOfData.push(data);
@@ -136,6 +140,13 @@ export class DropdownSettingComponent implements OnInit {
     this.optionsInterval.map(item => {
       this.selectedIntervals.push(item.value);
     });
+    this.optionsCancelInterval = this.listOfData[parseInt(this.selectedCP) - 1].cancel_interval[index].map((item: any) => ({
+      value: item,
+      label: item
+    }));
+    this.optionsCancelInterval.map(item => {
+      this.selectedCancelIntervals.push(item.value);
+    });
   }
 
   updateDropdown() {
@@ -152,6 +163,10 @@ export class DropdownSettingComponent implements OnInit {
       inputs.push(validate.test(item));
     });
     this.selectedIntervals.map(item => {
+      inputs.push(validate.test(item));
+    });
+
+    this.selectedCancelIntervals.map(item => {
       inputs.push(validate.test(item));
     });
 
@@ -176,7 +191,8 @@ export class DropdownSettingComponent implements OnInit {
           bid: this.selectedBids,
           ask: this.selectedAsks,
           amount: this.selectedAmounts,
-          interval: this.selectedIntervals
+          interval: this.selectedIntervals,
+          cancel_interval: this.selectedCancelIntervals
         };
 
         this.settingRestService
@@ -223,6 +239,7 @@ export class DropdownSettingComponent implements OnInit {
     this.selectedAsks = [];
     this.selectedAmounts = [];
     this.selectedIntervals = [];
+    this.selectedCancelIntervals = [];
   }
 
   clearInput(): void {
@@ -237,6 +254,8 @@ export class DropdownSettingComponent implements OnInit {
     this.optionsAmount = [];
     this.selectedIntervals = [];
     this.optionsInterval = [];
+    this.selectedCancelIntervals = [];
+    this.optionsCancelInterval = [];
   }
 
   ngOnInit(): void {
