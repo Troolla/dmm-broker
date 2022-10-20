@@ -93,7 +93,14 @@ export class OrderSettingComponent {
             ask: value.map((x: any) => x.ask),
             amount: value.map((x: any) => x.amount),
             interval: value.map((x: any) => x.interval),
-            cancel_interval: value.map((x: any) => x.cancel_interval),
+            cancel_interval: value.map((x: any) => {
+              if(i.exchange === 'BitFlyer'){
+                return "N/A"
+              }
+              if(i.exchange === 'OkCoin'){
+                return "N/A"
+              }
+              return x.cancel_interval}),
             status: i.status,
             statusError: value.map((x: any) => x.status),
             errorCount: value.map((x: any) => x.errorCount),
@@ -201,7 +208,6 @@ export class OrderSettingComponent {
   }
 
   updateEditCache(): void {
-    console.log(this.listOfData);
     this.listOfData.forEach(item => {
       if (this.editCache[item.id] != null) {
         const index = item.symbol.findIndex(x => x === this.editCache[item.id].initialSymbol);
