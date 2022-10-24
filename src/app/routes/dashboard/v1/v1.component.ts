@@ -22,12 +22,29 @@ export class DashboardV1Component implements OnInit {
     this.type = index!;
   }
 
-  exposureList = [];
+  initialSymbols = [
+    { symbol: 'JPY', balance: '0' },
+    { symbol: 'BTC', balance: '0' },
+    { symbol: 'ETH', balance: '0' },
+    { symbol: 'XRP', balance: '0' }
+  ];
+
+  exchanges = ['Bitflyer', 'Coincheck', 'Liquid', 'Okcoin', 'Zaif'];
+
+  exposureList: any[] = [];
   rateList = [];
 
   constructor(private settings: SettingsService, private sseService: SseService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    this.exposureList = [];
+    this.exchanges.map(exchange => {
+      this.exposureList.push({
+        exchange,
+        values: this.initialSymbols
+      });
+    });
+
     this.sseService
       .getServerSentEvent(`${environment.api['serverUrl']}sse`)
       .pipe(catchError(async err => console.log('err', err)))
